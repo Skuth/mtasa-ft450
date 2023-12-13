@@ -13,12 +13,21 @@ const getRandomInRange = (min, max) => {
 }
 
 const updateFtParams = (rpm, gear, speed, engineState) => {
-  ftParams.rpm = rpm
-  ftParams.gear = gear
-  ftParams.speed = speed
   ftParams.engineState = Boolean(engineState)
-  ftParams.engineTemp = getRandomInRange(75, 83)
-  ftParams.oilPress = getRandomInRange(2, 3)
+
+  if (Boolean(engineState)) {
+    ftParams.rpm = rpm
+    ftParams.gear = gear
+    ftParams.speed = speed
+    ftParams.engineTemp = getRandomInRange(75, 83)
+    ftParams.oilPress = getRandomInRange(2, 3)
+  } else {
+    ftParams.rpm = 0
+    ftParams.gear = 0
+    ftParams.speed = 0
+    ftParams.engineTemp = 0
+    ftParams.oilPress = 0
+  }
 }
 
 Vue.component("rpm", {
