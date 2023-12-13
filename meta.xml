@@ -1,0 +1,18 @@
+<meta>
+  <info author="SKUTH" version="0.0.1" type="script"></info>
+
+  <script src="client.lua" type="client" cache="false" />
+  
+  <!-- HTML -->
+  <file src="fueltech.html" />
+  <!-- HTML -->
+
+  <!-- FILES -->
+  <file src="assets/style.css" />
+
+  <file src="assets/script.js" />
+  <file src="assets/vue.js" />
+
+  <file src="assets/image/fueltech.png" />
+  <!-- FILES -->
+</meta>

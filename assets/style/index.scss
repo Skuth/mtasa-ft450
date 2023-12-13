@@ -1,0 +1,183 @@
+@use "sass:map";
+
+$ftTop: 80px;
+$ftLeft: 112px;
+
+$ftWidth: 478px;
+$ftHeight: 278px;
+
+$statusItemTitleColor: #da9853;
+
+$rpmContainerColor: #3d3d3d;
+$rpmColors: (
+  "low": #ffe232,
+  "medium": #ff8d1c,
+  "high": #fc1712
+);
+
+$buttonStatus: (
+  "on": #04de00,
+  "off": #d4302d
+);
+
+$shiftScreenColor: #ffe232;
+$shiftScreenTextColor: #ff370e;
+
+$textColor: #ffffff;
+$backgroundColor: #1b191a;
+
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+  font-family: 'Afacad', sans-serif;
+  color: $textColor;
+}
+
+body {
+  overflow: hidden;
+}
+
+.fueltech {
+  position: absolute;
+  top: $ftTop;
+  left: $ftLeft;
+
+  width: 100vw;
+  height: 100vh;
+
+  &__grid {
+    width: $ftWidth;
+    height: $ftHeight;
+    
+    position: fixed;
+
+    padding: 8px 16px;
+
+    background: $backgroundColor;
+  }
+}
+
+.rpm {
+  width: 100%;
+
+  &__text {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+
+    p {
+      font-size: 38px;
+      font-weight: bold;
+    }
+
+    span {
+      font-size: 22px;
+      font-weight: normal;
+    }
+  }
+
+  &__bar {
+
+    &__container {
+      position: relative;
+
+      display: block;
+
+      width: 100%;
+      height: 40px;
+
+      margin-top: -10px;
+
+      z-index: -1;
+
+      overflow: hidden;
+
+      background: linear-gradient(
+        45deg,
+        map.get($rpmColors, "low"),
+        map.get($rpmColors, "medium"),
+        map.get($rpmColors, "high"),
+      );
+
+      &::before {
+        content: "";
+
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        clip-path: polygon(90% 0, 55% 70%, 0 80%, 0 0);
+
+        height: 50%;
+
+        background: $backgroundColor;
+      }
+    }
+
+    &__content {
+      height: 100%;
+      background: $rpmContainerColor;
+      margin-left: auto;
+
+      transition: width 0.25s;
+    }
+  }
+}
+
+.status__item {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  &--title {
+    color: $statusItemTitleColor;
+    font-weight: 600;
+    font-size: 20px;
+  }
+
+  &--value {
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  &--button {
+    width: 64px;
+    height: 28px;
+    margin-top: 8px;
+    background: red;
+    border-radius: 4px;
+    transition: background-color 0.25s;
+
+    &.on {
+      background: map.get($buttonStatus, "on");
+    }
+    &.off {
+      background: map.get($buttonStatus, "off");
+    }
+  }
+}
+
+.status {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.shift {
+  background: $shiftScreenColor;
+  width: 100%;
+  height: calc(100% - 120px);
+  margin-top: 15px;
+  display: grid;
+  place-items: center;
+
+  h1 {
+    color: $shiftScreenTextColor;
+    font-weight: bold;
+    font-size: 140px;
+  }
+}

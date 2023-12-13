@@ -1,0 +1,1 @@
+START /B sass --watch index.scss ../style.css --no-source-map
