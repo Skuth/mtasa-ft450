@@ -170,7 +170,7 @@ body {
 .shift {
   background: $shiftScreenColor;
   width: 100%;
-  height: calc(100% - 120px);
+  height: calc(100% - 105px);
   margin-top: 15px;
   display: grid;
   place-items: center;
@@ -178,6 +178,6 @@ body {
   h1 {
     color: $shiftScreenTextColor;
     font-weight: bold;
-    font-size: 140px;
+    font-size: 115px;
   }
 }
