@@ -7,10 +7,10 @@ local page = "http://mta/local/fueltech.html"
 
 function loadBrowser()
   browserGUI = guiCreateBrowser(
-    ((screenWidth - 700) - 32),
-    ((screenHeight - 494) - 32),
-    700,
-    494,
+    ((screenWidth - 480) - 32),
+    ((screenHeight - 296) - 32),
+    480,
+    296,
     true,
     true,
     false

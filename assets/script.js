@@ -1,6 +1,6 @@
 const ftParams = {
   rpm: 0,
-  maxRpm: 6000,
+  maxRpm: 9500,
   gear: 0,
   speed: 0,
   engineState: true,
