@@ -108,7 +108,7 @@ body {
 .shift {
   background: #ffe232;
   width: 100%;
-  height: calc(100% - 105px);
+  height: calc(100% - 78px);
   margin-top: 15px;
   display: grid;
   place-items: center;
@@ -116,5 +116,5 @@ body {
 .shift h1 {
   color: #ff370e;
   font-weight: bold;
-  font-size: 115px;
+  font-size: 70px;
 }
