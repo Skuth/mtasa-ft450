@@ -27,16 +27,34 @@ function loadBrowser()
   )
 end
 
-function handleRender()
+function isPlayerInValidVehicle()
   if isPlayerInVehicle(localPlayer) then
+    local vehicle = getPlayerOccupiedVehicle(localPlayer)
+    local vehicleType = getVehicleType(vehicle)
+
+    if vehicleType == "Automobile"
+      or vehicleType == "Bike"
+      or vehicleType == "Monster Truck"
+      or vehicleType == "Quad"
+    then
+      return true
+    end
+  end
+
+  return false
+end
+
+function handleRender()
+  if isPlayerInValidVehicle() then
     local vehicle = getPlayerOccupiedVehicle(localPlayer)
 
     local rpm = getVehicleRPM(vehicle)
     local gear = getVehicleCurrentGear(vehicle)
+    local numberOfGears = getVehicleHandling(vehicle).numberOfGears
     local speed = getElementSpeed(vehicle) * 3
     local engineState = getVehicleEngineState(vehicle) and "true" or "false"
 
-    executeBrowserJavascript(browser, ("updateFtParams(%d, %d, %d, %s)"):format(rpm, gear, speed, engineState))
+    executeBrowserJavascript(browser, ("updateFtParams(%d, %d, %d, %d, %s)"):format(rpm, gear, numberOfGears, speed, engineState))
     executeBrowserJavascript(browser, "app.updateRender()")
   end
 end
@@ -86,24 +104,39 @@ end
 addEventHandler(
   "onClientVehicleEnter",
   getRootElement(),
-  function()
-    loadBrowser()
-    addEventHandler("onClientRender", root, handleRender)
+  function(player)
+    if (player == localPlayer) then
+      loadBrowser()
+      addEventHandler("onClientRender", root, handleRender)
+    end
   end
 )
 
 addEventHandler(
   "onClientVehicleExit",
   getRootElement(),
+  function(player)
+    if (player == localPlayer) then
+      if isElement(browserGUI) then
+        destroyElement(browserGUI)
+      end
+  
+      if isElement(browser) then
+        destroyElement(browser)
+      end
+  
+      removeEventHandler("onClientRender", root, handleRender)
+    end
+  end
+)
+
+addEventHandler(
+  "onClientResourceStart",
+  getRootElement(),
   function()
-    if isElement(browserGUI) then
-      destroyElement(browserGUI)
+    if isPlayerInValidVehicle() then
+      loadBrowser()
+      addEventHandler("onClientRender", root, handleRender)
     end
-
-    if isElement(browser) then
-      destroyElement(browser)
-    end
-
-    removeEventHandler ("onClientRender", root, handleRender)
   end
 )

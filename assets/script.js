@@ -1,7 +1,8 @@
 const ftParams = {
   rpm: 0,
-  maxRpm: 9500,
+  maxRpm: 9000,
   gear: 0,
+  numberOfGears: 0,
   speed: 0,
   engineState: true,
   engineTemp: 0,
@@ -12,12 +13,13 @@ const getRandomInRange = (min, max) => {
   return Number(Math.random() * (max - min + 1) + min).toFixed(2)
 }
 
-const updateFtParams = (rpm, gear, speed, engineState) => {
+const updateFtParams = (rpm, gear, numberOfGears, speed, engineState) => {
   ftParams.engineState = Boolean(engineState)
 
   if (Boolean(engineState)) {
     ftParams.rpm = rpm
     ftParams.gear = gear
+    ftParams.numberOfGears = numberOfGears
     ftParams.speed = speed
     ftParams.engineTemp = getRandomInRange(75, 83)
     ftParams.oilPress = getRandomInRange(2, 3)
@@ -144,6 +146,12 @@ Vue.component("fueltech", {
     currentRpm() {
       return ftParams.rpm
     },
+    currentGear() {
+      return ftParams.gear
+    },
+    numberOfGears() {
+      return ftParams.numberOfGears
+    },
     maxRpm() {
       return ftParams.maxRpm
     },
@@ -157,13 +165,21 @@ Vue.component("fueltech", {
       }
     },
     isShiftScreenActive() {
-      const rpmPercentage = (100 / this.maxRpm) * this.currentRpm
-
-      if (rpmPercentage >= 95) {
-        return true
+      if (this.currentGear <= 0) {
+        return false
       }
 
-      return false
+      if (this.currentGear >= this.numberOfGears) {
+        return false
+      }
+
+      const rpmPercentage = (100 / this.maxRpm) * this.currentRpm
+
+      if (rpmPercentage < 95) {
+        return false
+      }
+
+      return true
     }
   },
   template: `
