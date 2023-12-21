@@ -1,7 +1,12 @@
 <meta>
   <info author="SKUTH" version="0.0.1" type="script"></info>
 
+  <script src="helpers.lua" type="client" cache="false" />
   <script src="client.lua" type="client" cache="false" />
+
+  <export function="isPlayerInValidVehicle" type="client" />
+  <export function="getElementSpeed" type="client" />
+  <export function="getVehicleRPM" type="client" />
   
   <!-- HTML -->
   <file src="fueltech.html" />
